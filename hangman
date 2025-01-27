@@ -1,0 +1,43 @@
+import random
+import random
+import string
+
+words = {"data": ["aback", "abaft", "abandoned", "abashed", "aberrant", "abhorrent", "abiding", "abject", "ablaze", "able", "abnormal", "aboard", "aboriginal", "abortive", "abounding", "abrasive", "abrupt", "absent", "absorbed", "absorbing", "abstracted", "absurd", "abundant", "abusive", "accept", "acceptable", "accessible", "accidental", "account", "accurate", "achiever", "acid", "acidic", "acoustic", "acoustics", "acrid", "act", "action", "activity", "actor", "actually", "ad hoc", "adamant", "adaptable", "add", "addicted", "addition", "adhesive", "adjoining", "adjustment", "admire", "admit", "adorable", "adventurous", "advertisement", "advice", "advise", "afford", "afraid", "aftermath", "afternoon", "afterthought", "aggressive", "agonizing", "agree", "agreeable", "agreement", "ahead", "air", "airplane", "airport", "ajar", "alarm", "alcoholic", "alert", "alike", "alive", "alleged", "allow", "alluring", "aloof", "amazing", "ambiguous", "ambitious", "amount", "amuck", "amuse", "amused", "amusement", "amusing", "analyze", "ancient", "anger", "angle"]}
+#words=random.choice(words)
+#print(words)
+
+def valid_word(words):
+     word=random.choice(words["data"])
+     while '-' in word or ' ' in word:
+         word=random.choice(words["data"])
+     return word
+     #print(valid_word(words))
+def hangman():
+     word=valid_word(words)
+     word_letters=set(word.upper())
+     alphabet=set(string.ascii_uppercase)
+     used_letters=set()
+     lives = 6
+     while len(word_letters) > 0 and lives >0:
+      print('You have used these letters: ', ' '.join(used_letters))
+      word_list=[letter if letter in used_letters else '-' for letter in word.upper()]
+      print('Current word: ', ' '.join(word_list))
+      user_letter = input("Guess a letter: ").upper()
+      if user_letter in alphabet - used_letters:
+          used_letters.add(user_letter)
+
+          if user_letter in word_letters:
+              word_letters.remove(user_letter)
+          else :
+              lives = lives - 1
+              print("Letter is not in word.")
+      elif user_letter in used_letters:
+           print("You have already used that letter. Guess another letter.")
+      else:
+           print("Invalid character.")
+     if lives == 0:
+       print(f'You died, sorry. The word was {word}')
+     print(f'Yay! You guessed the word {word} correctly!')
+
+
+hangman()
